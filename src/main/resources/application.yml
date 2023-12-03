@@ -1,0 +1,15 @@
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: admin
+    password:
+      driverClasName: org.h2.driver
+      generate.unique.name: false
+      name: order-system
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
