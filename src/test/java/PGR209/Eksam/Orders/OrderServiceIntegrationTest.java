@@ -1,7 +1,10 @@
 package PGR209.Eksam.Orders;
 
+import PGR209.Eksam.Model.Customer;
+import PGR209.Eksam.Model.Machine;
+import PGR209.Eksam.Repo.CustomerRepo;
+import PGR209.Eksam.Repo.MachineRepo;
 import PGR209.Eksam.Service.OrderService;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,8 +14,14 @@ public class OrderServiceIntegrationTest {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    MachineRepo machineRepo;
+
+    @Autowired
+    CustomerRepo customerRepo;
+
+
     @Test
-    @Transactional
     void getAllOrders(){
         var orders = orderService.getAllOrders();
 
@@ -21,20 +30,31 @@ public class OrderServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
+    void createOrder(){
+        Machine machine = new Machine("TestMachine");
+        machineRepo.save(machine);
+        Customer customer = new Customer("TestCustomer", "TestCustomer@test.com");
+        customerRepo.save(customer);
+        orderService.createOrder(customer,machine);
+
+        var createdOrder = orderService.getOrderById(2L);
+        assert createdOrder.getMachine().getMachineName()=="TestMachine";
+        assert createdOrder.getCustomer().getCustomerName()=="TestCustomer";
+        assert createdOrder.getCustomer().getCustomerEmail()=="TestCustomer@test.com";
+
+    }
+    @Test
     void shouldFetchOrderById(){
         var order = orderService.getOrderById(1L);
         assert order.getOrderId()==1L;
     }
     @Test
-    @Transactional
     void shouldDeleteOrder(){
         orderService.deleteOrder(1L);
 
         assert orderService.getOrderById(1L) == null;
     }
     @Test
-    @Transactional
     void updateOrder(){
     }
 }

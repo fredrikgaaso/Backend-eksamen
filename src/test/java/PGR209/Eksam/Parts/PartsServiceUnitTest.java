@@ -46,5 +46,16 @@ public class PartsServiceUnitTest {
         verify(partsRepo).deleteById(partsId);
     }
     @Test
+    void createPart(){
+        Parts parts = new Parts("TestPart");
+        partsRepo.save(parts);
+        partsService.createParts(parts);
+
+
+        var createdPart = partsService.getPartsById(2L);
+
+        assert createdPart.getPartsName() == "TestPart";
+    }
+    @Test
     void updatePart(){}
 }

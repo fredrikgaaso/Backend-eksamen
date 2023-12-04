@@ -1,5 +1,7 @@
 package PGR209.Eksam.Controller;
 
+import PGR209.Eksam.Model.Customer;
+import PGR209.Eksam.Model.Machine;
 import PGR209.Eksam.Model.Orders;
 import PGR209.Eksam.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public Orders createOrder(@RequestBody Orders orders) {
-        return orderService.createOrder(orders);
+    public Orders createOrder(@RequestBody Customer customer, Machine machine) {
+         return orderService.createOrder(customer, machine);
     }
 
     @GetMapping

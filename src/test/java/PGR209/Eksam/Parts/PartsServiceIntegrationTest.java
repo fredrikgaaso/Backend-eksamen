@@ -33,6 +33,11 @@ public class PartsServiceIntegrationTest {
 
         assert partsService.getPartsById(1L) == null;
     }
+
+    @Test
+    void createPart(){
+
+    }
     @Test
     @Transactional
     void updateParts(){

@@ -1,5 +1,6 @@
 package PGR209.Eksam.Service;
 
+import PGR209.Eksam.Model.Customer;
 import PGR209.Eksam.Model.Machine;
 import PGR209.Eksam.Model.Orders;
 import PGR209.Eksam.Repo.OrderRepo;
@@ -23,8 +24,12 @@ public class OrderService {
     public Orders getOrderById(Long id) {
         return orderRepo.findById(id).orElse(null);
     }
-    public Orders createOrder(Orders orders){
-        return orderRepo.save(orders);
+    public Orders createOrder(Customer customer, Machine machine){
+        Orders newOrder = new Orders();
+        newOrder.setCustomer(customer);
+        newOrder.setMachine(machine);
+
+        return orderRepo.save(newOrder);
     }
     public void deleteOrder(Long id) {
      orderRepo.deleteById(id);
