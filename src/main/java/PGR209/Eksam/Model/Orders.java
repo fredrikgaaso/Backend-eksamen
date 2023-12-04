@@ -1,5 +1,6 @@
 package PGR209.Eksam.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,20 +23,14 @@ public class Orders {
     @SequenceGenerator(name = "order_seq_gen", sequenceName = "order_seq", allocationSize = 1)
     @Column(name = "order_id")
     private Long orderId;
-    @Column(name = "order_name")
-    private String orderName;
+
+
+   @ManyToOne
+   @JoinColumn(name = "machine_id")
+   private Machine machine;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("order")
-    @JoinColumn(name = "order_id")
-    private List<Machine> machines = new ArrayList<>();
-
-
-    public Orders(String orderName) {
-        this.orderName = orderName;
-    }
 }

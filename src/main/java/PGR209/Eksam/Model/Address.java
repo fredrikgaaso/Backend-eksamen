@@ -27,6 +27,7 @@ public class Address {
     @ManyToMany(mappedBy = "addresses", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Customer> customers = new ArrayList<>();
+
     public Address(String addressName) {
         this.addressName = addressName;
     }

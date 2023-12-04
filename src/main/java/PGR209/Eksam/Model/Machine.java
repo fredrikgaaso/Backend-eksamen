@@ -1,14 +1,10 @@
 package PGR209.Eksam.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -24,10 +20,11 @@ public class Machine {
     @Column(name = "machine_name")
     private String machineName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("machine")
-    @JoinColumn(name = "machine_id")
-    private List<Subassembly> subassemblies = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "subassembly_id")
+    private Subassembly subassembly;
+
+
     public Machine(String machineName) {
         this.machineName = machineName;
     }

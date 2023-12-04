@@ -1,4 +1,9 @@
 package PGR209.Eksam.Repo;
 
-public interface SubassemblyRepo {
+import PGR209.Eksam.Model.Subassembly;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface SubassemblyRepo extends JpaRepository<Subassembly, Long> {
 }

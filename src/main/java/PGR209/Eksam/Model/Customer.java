@@ -28,8 +28,7 @@ public class Customer {
     private String customerEmail;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("customer")
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "order_id")
     private List<Orders> orders = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)

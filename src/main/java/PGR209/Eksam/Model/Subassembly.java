@@ -24,10 +24,10 @@ public class Subassembly {
     @Column(name = "subassembly_name")
     private String subassemblyName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("subassembly")
-    @JoinColumn(name = "subassembly_id")
-    private List<Parts> parts = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "parts_id")
+    private Parts parts;
+
 
     public Subassembly(String subassemblyName) {
         this.subassemblyName = subassemblyName;
