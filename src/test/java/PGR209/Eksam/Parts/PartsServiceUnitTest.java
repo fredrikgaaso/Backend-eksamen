@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,14 +48,14 @@ public class PartsServiceUnitTest {
     }
     @Test
     void createPart(){
-        Parts parts = new Parts("TestPart");
-        partsRepo.save(parts);
-        partsService.createParts(parts);
+        Parts newPart = new Parts("TestPart");
+         partsService.createParts(newPart);
+        Parts createdPart = partsService.getPartsById(1L);
+        partsRepo.save(createdPart);
 
+        assertNotNull(createdPart);
 
-        var createdPart = partsService.getPartsById(2L);
-
-        assert createdPart.getPartsName() == "TestPart";
+        assert partsService.getPartsById(1L).getPartsName() == "TestPart";
     }
     @Test
     void updatePart(){}
