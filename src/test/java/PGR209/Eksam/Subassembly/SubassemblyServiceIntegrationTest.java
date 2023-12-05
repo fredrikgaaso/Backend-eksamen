@@ -1,5 +1,7 @@
 package PGR209.Eksam.Subassembly;
 
+import PGR209.Eksam.Model.Parts;
+import PGR209.Eksam.Repo.PartsRepo;
 import PGR209.Eksam.Service.SubassemblyService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class SubassemblyServiceIntegrationTest {
     @Autowired
     SubassemblyService subassemblyService;
+
+    @Autowired
+    PartsRepo partsRepo;
 
     @Test
     @Transactional
@@ -36,5 +41,15 @@ public class SubassemblyServiceIntegrationTest {
     @Test
     @Transactional
     void updateSubassembly(){
+        var subassemblyId = 1L;
+        var oldSubassemblyName = subassemblyService.getSubassemblyById(subassemblyId).getSubassemblyName();
+        var oldSubassemblyParts = subassemblyService.getSubassemblyById(subassemblyId).getParts().size();
+        String newSubassemblyName = "TestSubassembly";
+        Parts parts = partsRepo.save(new Parts("TestParts"));
+        subassemblyService.updateSubassembly(newSubassemblyName, parts, subassemblyId);
+        var updatedSubassembly = subassemblyService.getSubassemblyById(1L);
+
+        assert oldSubassemblyName != updatedSubassembly.getSubassemblyName();
+        assert oldSubassemblyParts != updatedSubassembly.getParts().size();
     }
 }

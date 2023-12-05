@@ -1,5 +1,7 @@
 package PGR209.Eksam.Address;
 
+import PGR209.Eksam.Model.Customer;
+import PGR209.Eksam.Repo.CustomerRepo;
 import PGR209.Eksam.Service.AddressService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,8 @@ public class AddressServiceIntegrationTest {
     @Autowired
     AddressService addressService;
 
+    @Autowired
+    CustomerRepo customerRepo;
     @Test
     void getAllAddresses(){
         var addresses = addressService.getAllAddresses();
@@ -34,5 +38,17 @@ public class AddressServiceIntegrationTest {
     @Test
     @Transactional
     void updateAddress(){
+        var addressId = 1L;
+        var oldAddressName = addressService.getAddressById(addressId).getAddressName();
+        var oldAddressCustomers = addressService.getAddressById(addressId).getCustomers().size();
+
+        String newAddressName = "TestAddress 22";
+
+        Customer newCustomer = customerRepo.save(new Customer("TestCustomer", "TestCustomer@mail.com"));
+
+        addressService.updateAddress(newAddressName, newCustomer, addressId);
+        var updatedAddress = addressService.getAddressById(1L);
+        assert oldAddressName != updatedAddress.getAddressName();
+        assert oldAddressCustomers != updatedAddress.getCustomers().size();
     }
 }

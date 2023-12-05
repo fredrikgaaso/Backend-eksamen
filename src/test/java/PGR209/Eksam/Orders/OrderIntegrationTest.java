@@ -44,6 +44,10 @@ public class OrderIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/orders/{id}", orderId))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.orderId").value(orderId));
-
     }
+
+    @Test
+    void shouldCreateNewOrder() throws Exception{
+    }
+
 }

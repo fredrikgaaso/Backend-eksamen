@@ -1,42 +1,40 @@
 package PGR209.Eksam.Controller;
 
 import PGR209.Eksam.Model.Customer;
-import PGR209.Eksam.Model.Machine;
-import PGR209.Eksam.Model.Orders;
-import PGR209.Eksam.Service.OrderService;
+import PGR209.Eksam.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/Customers")
 public class CustomerController {
 
-    private final OrderService orderService;
+    private final CustomerService customerService;
 
     @Autowired
-    public CustomerController(OrderService orderService) {
-        this.orderService = orderService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @PostMapping
-    public Orders createOrder(@RequestBody Customer customer, Machine machine) {
-         return orderService.createOrder(customer, machine);
+    public Customer createCustomer(@RequestBody Customer customer) {
+         return customerService.createCustomer(customer);
     }
 
     @GetMapping
-    public List<Orders> getOrders(){
-        return orderService.getAllOrders();
+    public List<Customer> getCustomers(){
+        return customerService.getAllCustomer();
     }
 
     @GetMapping("/{id}")
-    public Orders getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id);
+    public Customer getCustomerById(@PathVariable Long id) {
+        return customerService.getCustomerById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrderById(@PathVariable Long id) {
-        orderService.deleteOrder(id);
+    public void deleteCustomerById(@PathVariable Long id) {
+        customerService.deleteCustomer(id);
     }
 }

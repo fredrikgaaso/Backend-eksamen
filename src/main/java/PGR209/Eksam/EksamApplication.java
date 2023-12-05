@@ -24,9 +24,8 @@ public class EksamApplication {
 			SubassemblyRepo subassemblyRepo) {
 
 		return args -> {
-			if (customerRepo.count() != 0) {
-
-			}else {	Customer customer = customerRepo.save(new Customer("Hank", "Hank@gmail.com"));
+			if (customerRepo.count() == 0) {
+				Customer customer = customerRepo.save(new Customer("Hank", "Hank@gmail.com"));
 				Address address = addressRepo.save(new Address("hanks gate 22"));
 				customer.getAddresses().add(address);
 				customerRepo.save(customer);
@@ -43,8 +42,12 @@ public class EksamApplication {
 				Orders orders = new Orders();
 				orders.setCustomer(customer);
 				orders.getMachine().add(machine);
-				orderRepo.save(orders);}
+				orderRepo.save(orders);
+			}
+			System.out.println("hello world");
+
 		};
+
 	}
 
 }

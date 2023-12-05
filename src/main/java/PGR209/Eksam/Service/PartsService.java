@@ -30,4 +30,12 @@ public class PartsService {
     public void deleteParts(Long id){
         partsRepo.deleteById(id);
     }
+
+    public Parts updateParts(String partName, Long id){
+        var partsToUpdate = getPartsById(id);
+        partsToUpdate.setPartsName(partName);
+        Parts savedPart = partsRepo.save(partsToUpdate);
+        return savedPart;
+
+    }
 }

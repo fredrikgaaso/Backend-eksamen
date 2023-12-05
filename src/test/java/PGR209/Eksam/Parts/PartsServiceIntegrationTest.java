@@ -21,7 +21,6 @@ public class PartsServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchPartsById(){
         var parts = partsService.getPartsById(1L);
         assert parts.getPartsId()==1L;
@@ -40,12 +39,21 @@ public class PartsServiceIntegrationTest {
 
         partsService.createParts(partName);
 
-        var createdPart = partsService.getPartsById(2L);
+        var createdPart = partsService.getPartsById(3L);
 
         assert createdPart.getPartsName() == partName;
     }
     @Test
     @Transactional
     void updateParts(){
+        var partId = 1L;
+        var oldPartsName = partsService.getPartsById(partId).getPartsName();
+        String partsName = "TestPart";
+
+        partsService.updateParts(partsName, partId);
+
+        var updatedPart = partsService.getPartsById(1L);
+
+        assert oldPartsName != updatedPart.getPartsName();
     }
 }

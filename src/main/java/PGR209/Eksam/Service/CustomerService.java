@@ -1,5 +1,6 @@
 package PGR209.Eksam.Service;
 
+import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Customer;
 import PGR209.Eksam.Repo.CustomerRepo;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,14 @@ public class CustomerService {
     }
     public void deleteCustomer(Long id){
         customerRepo.deleteById(id);
+    }
+    public Customer updateCustomer(String customerName, String customerEmail, Address address, Long id){
+        var customerToUpdate = getCustomerById(id);
+        customerToUpdate.setCustomerName(customerName);
+        customerToUpdate.setCustomerEmail(customerEmail);
+        customerToUpdate.getAddresses().add(address);
+        Customer savedCustomer = customerRepo.save(customerToUpdate);
+        return savedCustomer;
     }
 
 }

@@ -15,6 +15,7 @@ public class OrderServiceIntegrationTest {
     @Autowired
     OrderService orderService;
 
+
     @Autowired
     MachineRepo machineRepo;
 
@@ -49,12 +50,25 @@ public class OrderServiceIntegrationTest {
         assert order.getOrderId()==1L;
     }
     @Test
+    @Transactional
     void shouldDeleteOrder(){
         orderService.deleteOrder(1L);
 
         assert orderService.getOrderById(1L) == null;
     }
     @Test
+    @Transactional
     void updateOrder(){
+        var orderId = 1L;
+        var oldOrderMachines = orderService.getOrderById(orderId).getMachine().size();
+        var oldOrderCustomer = orderService.getOrderById(orderId).getCustomer().getCustomerName();
+
+        Machine newMachine = machineRepo.save(new Machine("TestMachine"));
+
+        Customer newCustomer = customerRepo.save(new Customer("TestCustomer", "TestCustomer@mail.com"));
+        orderService.updateOrders(newCustomer, newMachine, orderId);
+        var updatedOrder = orderService.getOrderById(1L);
+        assert oldOrderMachines != updatedOrder.getMachine().size();
+        assert oldOrderCustomer != updatedOrder.getCustomer().getCustomerName();
     }
 }

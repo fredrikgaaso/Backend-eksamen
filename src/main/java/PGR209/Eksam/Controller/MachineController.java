@@ -1,42 +1,40 @@
 package PGR209.Eksam.Controller;
 
-import PGR209.Eksam.Model.Customer;
 import PGR209.Eksam.Model.Machine;
-import PGR209.Eksam.Model.Orders;
-import PGR209.Eksam.Service.OrderService;
+import PGR209.Eksam.Service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/Machines")
 public class MachineController {
 
-    private final OrderService orderService;
+    private final MachineService machineService;
 
     @Autowired
-    public MachineController(OrderService orderService) {
-        this.orderService = orderService;
+    public MachineController(MachineService machineService) {
+        this.machineService = machineService;
     }
 
     @PostMapping
-    public Orders createOrder(@RequestBody Customer customer, Machine machine) {
-         return orderService.createOrder(customer, machine);
+    public Machine createMachine(@RequestBody Machine machine) {
+         return machineService.createMachine( machine);
     }
 
     @GetMapping
-    public List<Orders> getOrders(){
-        return orderService.getAllOrders();
+    public List<Machine> getMachines(){
+        return machineService.getAllMachines();
     }
 
     @GetMapping("/{id}")
-    public Orders getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id);
+    public Machine getMachineById(@PathVariable Long id) {
+        return machineService.getMachineById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrderById(@PathVariable Long id) {
-        orderService.deleteOrder(id);
+    public void deleteMachineById(@PathVariable Long id) {
+        machineService.deleteMachine(id);
     }
 }

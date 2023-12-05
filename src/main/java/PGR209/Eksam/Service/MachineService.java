@@ -1,6 +1,7 @@
 package PGR209.Eksam.Service;
 
 import PGR209.Eksam.Model.Machine;
+import PGR209.Eksam.Model.Subassembly;
 import PGR209.Eksam.Repo.MachineRepo;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,15 @@ public class MachineService {
     }
     public void deleteMachine(Long id){
         machineRepo.deleteById(id);
+    }
+
+    public Machine updateMachine(String machineName, Subassembly subassembly, Long id){
+
+        var machineToUpdate = getMachineById(id);
+        machineToUpdate.setMachineName(machineName);
+        machineToUpdate.getSubassemblies().add(subassembly);
+
+        Machine savedMachine = machineRepo.save(machineToUpdate);
+        return savedMachine;
     }
 }

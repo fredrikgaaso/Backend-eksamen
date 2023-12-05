@@ -1,42 +1,40 @@
 package PGR209.Eksam.Controller;
 
-import PGR209.Eksam.Model.Customer;
-import PGR209.Eksam.Model.Machine;
-import PGR209.Eksam.Model.Orders;
-import PGR209.Eksam.Service.OrderService;
+import PGR209.Eksam.Model.Address;
+import PGR209.Eksam.Service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/address")
 public class AddressController {
 
-    private final OrderService orderService;
+    private final AddressService addressService;
 
     @Autowired
-    public AddressController(OrderService orderService) {
-        this.orderService = orderService;
+    public AddressController(AddressService addressService) {
+        this.addressService = addressService;
     }
 
     @PostMapping
-    public Orders createOrder(@RequestBody Customer customer, Machine machine) {
-         return orderService.createOrder(customer, machine);
+    public Address createAddress(@RequestBody Address addressName) {
+         return addressService.createAddress(addressName);
     }
 
     @GetMapping
-    public List<Orders> getOrders(){
-        return orderService.getAllOrders();
+    public List<Address> getAddress(){
+        return addressService.getAllAddresses();
     }
 
     @GetMapping("/{id}")
-    public Orders getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id);
+    public Address getAddressById(@PathVariable Long id) {
+        return addressService.getAddressById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrderById(@PathVariable Long id) {
-        orderService.deleteOrder(id);
+    public void deleteAddressById(@PathVariable Long id) {
+        addressService.deleteAddress(id);
     }
 }
