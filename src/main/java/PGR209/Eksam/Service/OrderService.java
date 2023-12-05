@@ -1,8 +1,6 @@
 package PGR209.Eksam.Service;
 
-import PGR209.Eksam.Model.Customer;
-import PGR209.Eksam.Model.Machine;
-import PGR209.Eksam.Model.Orders;
+import PGR209.Eksam.Model.*;
 import PGR209.Eksam.Repo.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,9 @@ public class OrderService {
         newOrder.setCustomer(customer);
         newOrder.getMachine().add(machine);
 
-        return orderRepo.save(newOrder);
+       Orders savedOrder = orderRepo.save(newOrder);
+
+        return savedOrder;
     }
     public void deleteOrder(Long id) {
      orderRepo.deleteById(id);

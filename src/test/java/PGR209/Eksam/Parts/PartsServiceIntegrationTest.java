@@ -36,7 +36,13 @@ public class PartsServiceIntegrationTest {
 
     @Test
     void createPart(){
+        String partName = "TestPart";
 
+        partsService.createParts(partName);
+
+        var createdPart = partsService.getPartsById(2L);
+
+        assert createdPart.getPartsName() == partName;
     }
     @Test
     @Transactional

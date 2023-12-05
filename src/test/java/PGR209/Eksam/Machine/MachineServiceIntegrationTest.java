@@ -17,7 +17,7 @@ public class MachineServiceIntegrationTest {
         var machines = machineService.getAllMachines();
 
         assert machines.size()==1;
-        assert machines.get(0).getMachineName().equals("Computer");
+        assert machines.get(0).getMachineName().equals("Mac");
     }
 
     @Test

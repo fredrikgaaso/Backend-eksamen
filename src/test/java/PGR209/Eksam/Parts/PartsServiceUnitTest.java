@@ -4,6 +4,7 @@ import PGR209.Eksam.Model.Parts;
 import PGR209.Eksam.Repo.PartsRepo;
 import PGR209.Eksam.Service.PartsService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,9 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class PartsServiceUnitTest {
@@ -48,14 +48,16 @@ public class PartsServiceUnitTest {
     }
     @Test
     void createPart(){
-        Parts newPart = new Parts("TestPart");
-         partsService.createParts(newPart);
-        Parts createdPart = partsService.getPartsById(1L);
-        partsRepo.save(createdPart);
+        String partName = "TestPart";
+        Parts expectedParts = new Parts();
+        expectedParts.setPartsId(1L);
+        expectedParts.setPartsName(partName);
 
-        assertNotNull(createdPart);
+        when(partsRepo.save(Mockito.any(Parts.class))).thenReturn(expectedParts);
 
-        assert partsService.getPartsById(1L).getPartsName() == "TestPart";
+        Parts result = partsService.createParts(partName);
+
+        assertEquals(expectedParts, result);
     }
     @Test
     void updatePart(){}

@@ -24,24 +24,26 @@ public class EksamApplication {
 			SubassemblyRepo subassemblyRepo) {
 
 		return args -> {
-			Customer customer = customerRepo.save(new Customer("Hank", "Hank@gmail.com"));
-			Address address = addressRepo.save(new Address("hanks gate 22"));
-			customer.getAddresses().add(address);
-			customerRepo.save(customer);
+			if (customerRepo.count() != 0) {
 
-			Machine machine = machineRepo.save(new Machine("Mac"));
-			Subassembly subassembly = subassemblyRepo.save(new Subassembly("Motherboard"));
-			Parts parts = partsRepo.save(new Parts("Chip"));
-			machine.getSubassemblies().add(subassembly);
-			subassembly.getParts().add(parts);
+			}else {	Customer customer = customerRepo.save(new Customer("Hank", "Hank@gmail.com"));
+				Address address = addressRepo.save(new Address("hanks gate 22"));
+				customer.getAddresses().add(address);
+				customerRepo.save(customer);
 
-			subassemblyRepo.save(subassembly);
-			machineRepo.save(machine);
+				Machine machine = machineRepo.save(new Machine("Mac"));
+				Subassembly subassembly = subassemblyRepo.save(new Subassembly("Motherboard"));
+				Parts parts = partsRepo.save(new Parts("Chip"));
+				machine.getSubassemblies().add(subassembly);
+				subassembly.getParts().add(parts);
 
-			Orders orders = new Orders();
-			orders.setCustomer(customer);
-			orders.getMachine().add(machine);
-			orderRepo.save(orders);
+				subassemblyRepo.save(subassembly);
+				machineRepo.save(machine);
+
+				Orders orders = new Orders();
+				orders.setCustomer(customer);
+				orders.getMachine().add(machine);
+				orderRepo.save(orders);}
 		};
 	}
 

@@ -19,8 +19,13 @@ public class PartsService {
     public Parts getPartsById(Long id) {
         return partsRepo.findById(id).orElse(null);
     }
-    public Parts createParts(Parts newParts){
-        return partsRepo.save(newParts);
+    public Parts createParts(String partName){
+        Parts newPart = new Parts();
+       newPart.setPartsName(partName);
+
+       Parts savedPart = partsRepo.save(newPart);
+
+        return savedPart;
     }
     public void deleteParts(Long id){
         partsRepo.deleteById(id);

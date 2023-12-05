@@ -12,7 +12,6 @@ public class AddressServiceIntegrationTest {
     AddressService addressService;
 
     @Test
-    @Transactional
     void getAllAddresses(){
         var addresses = addressService.getAllAddresses();
 
@@ -21,7 +20,6 @@ public class AddressServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchAddressById(){
         var address = addressService.getAddressById(1L);
         assert address.getAddressId()==1L;
