@@ -1,6 +1,5 @@
 package PGR209.Eksam.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +23,12 @@ public class Subassembly {
     @Column(name = "subassembly_name")
     private String subassemblyName;
 
-    @ManyToOne
-    @JoinColumn(name = "parts_id")
-    private Parts parts;
+    @OneToMany
+    @JoinTable(name = "Subassembly_Parts",
+            joinColumns = {@JoinColumn(name = "subassembly_id")},
+            inverseJoinColumns = {@JoinColumn ( name = "parts_id")})
+    private List<Parts> parts = new ArrayList<>();
+
 
 
     public Subassembly(String subassemblyName) {

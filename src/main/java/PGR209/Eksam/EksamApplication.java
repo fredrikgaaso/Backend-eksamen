@@ -29,27 +29,19 @@ public class EksamApplication {
 			customer.getAddresses().add(address);
 			customerRepo.save(customer);
 
-			Parts parts = partsRepo.save(new Parts("Chip"));
+			Machine machine = machineRepo.save(new Machine("Mac"));
 			Subassembly subassembly = subassemblyRepo.save(new Subassembly("Motherboard"));
-			Machine machine = machineRepo.save(new Machine("Computer"));
-			subassembly.setParts(parts);
-			machine.setSubassembly(subassembly);
+			Parts parts = partsRepo.save(new Parts("Chip"));
+			machine.getSubassemblies().add(subassembly);
+			subassembly.getParts().add(parts);
 
-			machineRepo.save(machine);
 			subassemblyRepo.save(subassembly);
-			partsRepo.save(parts);
+			machineRepo.save(machine);
 
-			machine.setSubassembly(subassembly);
 			Orders orders = new Orders();
 			orders.setCustomer(customer);
-			orders.setMachine(machine);
+			orders.getMachine().add(machine);
 			orderRepo.save(orders);
-
-
-
-
-
-
 		};
 	}
 

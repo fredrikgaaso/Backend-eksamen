@@ -27,25 +27,12 @@ public class OrderService {
     public Orders createOrder(Customer customer, Machine machine){
         Orders newOrder = new Orders();
         newOrder.setCustomer(customer);
-        newOrder.setMachine(machine);
+        newOrder.getMachine().add(machine);
 
         return orderRepo.save(newOrder);
     }
     public void deleteOrder(Long id) {
      orderRepo.deleteById(id);
-    }
-    public Orders updateOrder(Orders updatedOrder) {
-        Long orderId = updatedOrder.getOrderId();
-        Machine updatedMachine = updatedOrder.getMachine();
-
-        Orders existingOrder = orderRepo.findById(orderId).orElse(null);
-
-        existingOrder.setMachine(updatedMachine);
-
-        Orders savedOrder = orderRepo.save(existingOrder);
-
-        return savedOrder;
-
     }
 
 }

@@ -1,6 +1,5 @@
 package PGR209.Eksam.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -24,12 +22,14 @@ public class Orders {
     @Column(name = "order_id")
     private Long orderId;
 
-
-   @ManyToOne
-   @JoinColumn(name = "machine_id")
-   private Machine machine;
+   @OneToMany
+   @JoinTable(name = "Orders_Machine",
+           joinColumns = {@JoinColumn(name = "order_id")},
+           inverseJoinColumns = {@JoinColumn ( name = "machine_id")})
+   private List<Machine> machine = new ArrayList<>();
 
     @ManyToOne
+    @JsonIgnoreProperties("Orders")
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

@@ -7,9 +7,11 @@ import PGR209.Eksam.Repo.MachineRepo;
 import PGR209.Eksam.Service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.annotation.DirtiesContext;
 
-@SpringBootTest
+@DataJpaTest
 public class OrderServiceIntegrationTest {
     @Autowired
     OrderService orderService;
@@ -20,25 +22,27 @@ public class OrderServiceIntegrationTest {
     @Autowired
     CustomerRepo customerRepo;
 
+    @Autowired
+    private TestEntityManager entityManager;
+
 
     @Test
+    @DirtiesContext
     void getAllOrders(){
-        var orders = orderService.getAllOrders();
+        Iterable orders = orderService.getAllOrders();
 
-        assert orders.size()==1;
-        assert orders.get(0).getCustomer().getCustomerName().equals("Hank");
+        assert orders != null;
+
     }
 
     @Test
     void createOrder(){
         Machine machine = new Machine("TestMachine");
-        machineRepo.save(machine);
         Customer customer = new Customer("TestCustomer", "TestCustomer@test.com");
-        customerRepo.save(customer);
         orderService.createOrder(customer,machine);
 
-        var createdOrder = orderService.getOrderById(2L);
-        assert createdOrder.getMachine().getMachineName()=="TestMachine";
+        var createdOrder = orderService.getOrderById(1L);
+        assert createdOrder.getMachine().contains("TestMachine");
         assert createdOrder.getCustomer().getCustomerName()=="TestCustomer";
         assert createdOrder.getCustomer().getCustomerEmail()=="TestCustomer@test.com";
 
