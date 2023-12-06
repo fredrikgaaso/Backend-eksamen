@@ -23,8 +23,17 @@ public class MachineServiceIntegrationTest {
     void getAllMachines(){
         var machines = machineService.getAllMachines();
 
-        assert machines.size()==1;
+        assert machines.size()==12;
         assert machines.get(0).getMachineName().equals("Mac");
+    }
+
+    @Test
+    void shouldFetchOneMachinePage(){
+
+        var machinePage1 = machineService.getOneMachinePage(1);
+        var machinePage2 = machineService.getOneMachinePage(2);
+
+        assert machinePage1.count() <= 10 && machinePage2.count() <= 10;
     }
 
     @Test

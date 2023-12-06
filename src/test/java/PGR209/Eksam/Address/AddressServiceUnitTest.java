@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
 
@@ -30,6 +31,21 @@ public class AddressServiceUnitTest {
         var addresses = addressService.getAllAddresses();
         assert addresses.size() == 2;
     }
+
+    @Test
+    void shouldFetchOneAddressPage(){
+
+        List<Address> addressList = List.of(new Address(), new Address(), new Address(), new Address(), new Address(), new Address(), new Address(), new Address(), new Address(), new Address(), new Address(), new Address());
+        when(addressRepo.findAll()).thenReturn(addressList);
+
+        var addressPage1 = addressService.getOneAddressPage(1);
+        var addressPage2 = addressService.getOneAddressPage(2);
+
+        assert addressPage1.count() == 10;
+        assert addressPage2.count() == 2;
+    }
+
+
 
     @Test
     void shouldFetchAddressById(){

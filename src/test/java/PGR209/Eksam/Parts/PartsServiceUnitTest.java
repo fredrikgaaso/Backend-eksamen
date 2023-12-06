@@ -1,5 +1,6 @@
 package PGR209.Eksam.Parts;
 
+import PGR209.Eksam.Model.Orders;
 import PGR209.Eksam.Model.Parts;
 import PGR209.Eksam.Repo.PartsRepo;
 import PGR209.Eksam.Service.PartsService;
@@ -30,6 +31,20 @@ public class PartsServiceUnitTest {
         var parts = partsService.getAllParts();
         assert parts.size() == 3;
     }
+
+    @Test
+    void shouldFetchOneOrdersPage(){
+
+        List<Parts> partsList = List.of(new Parts(), new Parts(), new Parts(), new Parts(), new Parts(), new Parts(), new Parts(), new Parts(), new Parts(), new Parts(), new Parts(), new Parts());
+        when(partsRepo.findAll()).thenReturn(partsList);
+
+        var partsPage1 = partsService.getOnePartsPage(1);
+        var partsPage2 = partsService.getOnePartsPage(2);
+
+        assert partsPage1.count() == 10;
+        assert partsPage2.count() == 2;
+    }
+
     @Test
     void shouldFetchPartById(){
         long partsId = 1L;

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/address")
@@ -26,6 +27,11 @@ public class AddressController {
     @GetMapping
     public List<Address> getAddress(){
         return addressService.getAllAddresses();
+    }
+
+    @GetMapping("/page={pageNumber}")
+    public Stream<Address> getAddressPage(@PathVariable int pageNumber){
+        return addressService.getOneAddressPage(pageNumber);
     }
 
     @GetMapping("/{id}")

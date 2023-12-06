@@ -31,6 +31,15 @@ public class OrderServiceIntegrationTest {
     }
 
     @Test
+    void shouldFetchOneOrdersPage(){
+
+        var ordersPage1 = orderService.getOneOrdersPage(1);
+        var ordersPage2 = orderService.getOneOrdersPage(2);
+
+        assert ordersPage1.count() <= 10 && ordersPage2.count() <= 10;
+    }
+
+    @Test
     @Transactional
     void createOrder(){
         Machine machine = machineRepo.save(new Machine("TestMachine"));
@@ -38,7 +47,7 @@ public class OrderServiceIntegrationTest {
 
         orderService.createOrder(customer,machine);
 
-        var createdOrder = orderService.getOrderById(2L);
+        var createdOrder = orderService.getOrderById(13L);
 
         assert createdOrder.getMachine().size() == 1;
         assert createdOrder.getMachine().get(0).getMachineName() == "TestMachine";

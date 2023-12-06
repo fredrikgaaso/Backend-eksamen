@@ -21,8 +21,17 @@ public class SubassemblyServiceIntegrationTest {
     void getAllSubassemblies(){
         var subassemblies = subassemblyService.getAllSubassemblies();
 
-        assert subassemblies.size()==1;
+        assert subassemblies.size()==12;
         assert subassemblies.get(0).getSubassemblyName().equals("Motherboard");
+    }
+
+    @Test
+    void shouldFetchOneSubassemblyPage(){
+
+        var subassemblyPage1 = subassemblyService.getOneSubassemblyPage(1);
+        var subassemblyPage2 = subassemblyService.getOneSubassemblyPage(2);
+
+        assert subassemblyPage1.count() <= 10 && subassemblyPage2.count() <= 10;
     }
 
     @Test

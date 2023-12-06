@@ -20,8 +20,17 @@ public class CustomerServiceIntegrationTest {
     void getAllCustomers(){
         var customers = customerService.getAllCustomer();
 
-        assert customers.size()==1;
+        assert customers.size()==15;
         assert customers.get(0).getCustomerName().equals("Hank");
+    }
+
+    @Test
+    void shouldFetchOneCustomerPage(){
+
+        var customerPage1 = customerService.getOneCustomerPage(1);
+        var customerPage2 = customerService.getOneCustomerPage(2);
+
+        assert customerPage1.count() <= 10 && customerPage2.count() <= 10;
     }
 
     @Test

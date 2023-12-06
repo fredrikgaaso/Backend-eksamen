@@ -1,11 +1,13 @@
 package PGR209.Eksam.Controller;
 
+import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Machine;
 import PGR209.Eksam.Service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/Machines")
@@ -26,6 +28,11 @@ public class MachineController {
     @GetMapping
     public List<Machine> getMachines(){
         return machineService.getAllMachines();
+    }
+
+    @GetMapping("/page={pageNumber}")
+    public Stream<Machine> getMachinePage(@PathVariable int pageNumber){
+        return machineService.getOneMachinePage(pageNumber);
     }
 
     @GetMapping("/{id}")

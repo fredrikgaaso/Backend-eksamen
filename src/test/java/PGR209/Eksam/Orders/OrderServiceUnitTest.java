@@ -1,5 +1,6 @@
 package PGR209.Eksam.Orders;
 
+import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Orders;
 import PGR209.Eksam.Repo.OrderRepo;
 import PGR209.Eksam.Service.OrderService;
@@ -31,6 +32,20 @@ public class OrderServiceUnitTest {
         var orders = orderService.getAllOrders();
         assert orders.size() == 3;
     }
+
+    @Test
+    void shouldFetchOneOrdersPage(){
+
+        List<Orders> ordersList = List.of(new Orders(), new Orders(), new Orders(), new Orders(), new Orders(), new Orders(), new Orders(), new Orders(), new Orders(), new Orders(), new Orders(), new Orders());
+        when(orderRepo.findAll()).thenReturn(ordersList);
+
+        var ordersPage1 = orderService.getOneOrdersPage(1);
+        var ordersPage2 = orderService.getOneOrdersPage(2);
+
+        assert ordersPage1.count() == 10;
+        assert ordersPage2.count() == 2;
+    }
+
     @Test
     void shouldFetchOrderById(){
         long orderId = 1L;

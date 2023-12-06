@@ -19,8 +19,17 @@ public class AddressServiceIntegrationTest {
     void getAllAddresses(){
         var addresses = addressService.getAllAddresses();
 
-        assert addresses.size()==1;
+        assert addresses.size()==15;
         assert addresses.get(0).getAddressName().equals("hanks gate 22");
+    }
+
+    @Test
+    void shouldFetchOneAddressPage(){
+
+        var addressPage1 = addressService.getOneAddressPage(1);
+        var addressPage2 = addressService.getOneAddressPage(2);
+
+        assert addressPage1.count() <= 10 && addressPage2.count() <= 10;
     }
 
     @Test

@@ -1,11 +1,13 @@
 package PGR209.Eksam.Controller;
 
+import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Customer;
 import PGR209.Eksam.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/Customers")
@@ -26,6 +28,11 @@ public class CustomerController {
     @GetMapping
     public List<Customer> getCustomers(){
         return customerService.getAllCustomer();
+    }
+
+    @GetMapping("/page={pageNumber}")
+    public Stream<Customer> getOneCustomerPage(@PathVariable int pageNumber){
+        return customerService.getOneCustomerPage(pageNumber);
     }
 
     @GetMapping("/{id}")

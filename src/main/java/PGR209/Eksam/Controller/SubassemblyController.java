@@ -1,11 +1,13 @@
 package PGR209.Eksam.Controller;
 
+import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Subassembly;
 import PGR209.Eksam.Service.SubassemblyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/Subassembly")
@@ -26,6 +28,11 @@ public class SubassemblyController {
     @GetMapping
     public List<Subassembly> getSubassemblys(){
         return subassemblyService.getAllSubassemblies();
+    }
+
+    @GetMapping("/page={pageNumber}")
+    public Stream<Subassembly> getSubassemblyPage(@PathVariable int pageNumber){
+        return subassemblyService.getOneSubassemblyPage(pageNumber);
     }
 
     @GetMapping("/{id}")

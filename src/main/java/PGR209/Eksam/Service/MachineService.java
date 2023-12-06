@@ -1,11 +1,13 @@
 package PGR209.Eksam.Service;
 
+import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Machine;
 import PGR209.Eksam.Model.Subassembly;
 import PGR209.Eksam.Repo.MachineRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class MachineService {
@@ -14,18 +16,25 @@ public class MachineService {
     public MachineService(MachineRepo machineRepo) {
         this.machineRepo = machineRepo;
     }
+
     public List<Machine> getAllMachines(){
         return machineRepo.findAll();
     }
+
+    public Stream<Machine> getOneMachinePage(int pageNumber) { return machineRepo.findAll().stream().skip((pageNumber * 10) - 10).limit(10); }
+
     public Machine getMachineById(Long id) {
         return machineRepo.findById(id).orElse(null);
     }
+
     public Machine createMachine(Machine newMachine){
         return machineRepo.save(newMachine);
     }
+
     public void deleteMachine(Long id){
         machineRepo.deleteById(id);
     }
+
 
     public Machine updateMachine(String machineName, Subassembly subassembly, Long id){
 

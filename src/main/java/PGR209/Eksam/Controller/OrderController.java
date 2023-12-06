@@ -1,5 +1,6 @@
 package PGR209.Eksam.Controller;
 
+import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Customer;
 import PGR209.Eksam.Model.Machine;
 import PGR209.Eksam.Model.Orders;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -28,6 +30,11 @@ public class OrderController {
     @GetMapping
     public List<Orders> getOrders(){
         return orderService.getAllOrders();
+    }
+
+    @GetMapping("/page={pageNumber}")
+    public Stream<Orders> getOrdersPage(@PathVariable int pageNumber){
+        return orderService.getOneOrdersPage(pageNumber);
     }
 
     @GetMapping("/{id}")

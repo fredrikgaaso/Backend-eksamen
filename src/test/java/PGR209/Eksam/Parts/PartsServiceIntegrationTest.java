@@ -1,6 +1,9 @@
 package PGR209.Eksam.Parts;
 
+import PGR209.Eksam.Model.Parts;
+import PGR209.Eksam.Repo.PartsRepo;
 import PGR209.Eksam.Service.PartsService;
+import jakarta.servlet.http.Part;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +14,25 @@ public class PartsServiceIntegrationTest {
     @Autowired
     PartsService partsService;
 
+    @Autowired
+    PartsRepo partsRepo;
+
     @Test
     @Transactional
     void getAllParts(){
         var parts = partsService.getAllParts();
 
-        assert parts.size()==1;
+        assert parts.size()==12;
         assert parts.get(0).getPartsName().equals("Chip");
+    }
+
+    @Test
+    void shouldFetchOnePartsPage(){
+
+        var partsPage1 = partsService.getOnePartsPage(1);
+        var partsPage2 = partsService.getOnePartsPage(2);
+
+        assert partsPage1.count() <= 10 && partsPage2.count() <= 10;
     }
 
     @Test
@@ -37,10 +52,13 @@ public class PartsServiceIntegrationTest {
     void createPart(){
         String partName = "TestPart";
 
-        partsService.createParts(partName);
+        var newPart = partsService.createParts(partName);
 
-        var createdPart = partsService.getPartsById(3L);
+        var createdPart = partsService.getPartsById(newPart.getPartsId());
 
+        var createdPartName = partsRepo.findByPartsName(partName);
+
+        assert createdPartName.getPartsName() == partName;
         assert createdPart.getPartsName() == partName;
     }
     @Test

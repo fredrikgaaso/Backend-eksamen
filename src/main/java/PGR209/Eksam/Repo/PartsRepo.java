@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PartsRepo extends JpaRepository<Parts, Long> {
+
+    Parts findByPartsName(String partName);
 }
