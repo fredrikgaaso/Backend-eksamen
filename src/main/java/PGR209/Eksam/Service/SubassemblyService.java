@@ -1,6 +1,5 @@
 package PGR209.Eksam.Service;
 
-import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Parts;
 import PGR209.Eksam.Model.Subassembly;
 import PGR209.Eksam.Repo.SubassemblyRepo;
@@ -27,7 +26,9 @@ public class SubassemblyService {
         return subassemblyRepo.findById(id).orElse(null);
     }
 
-    public Subassembly createSubassembly(Subassembly newSubassembly){
+    public Subassembly createSubassembly(String subassemblyName){
+        Subassembly newSubassembly = new Subassembly(subassemblyName);
+
         return subassemblyRepo.save(newSubassembly);
     }
 

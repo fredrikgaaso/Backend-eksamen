@@ -25,6 +25,7 @@ public class CustomerServiceIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldFetchOneCustomerPage(){
 
         var customerPage1 = customerService.getOneCustomerPage(1);

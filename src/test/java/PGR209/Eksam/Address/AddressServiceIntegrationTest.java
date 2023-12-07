@@ -16,6 +16,8 @@ public class AddressServiceIntegrationTest {
     @Autowired
     CustomerRepo customerRepo;
     @Test
+    @Transactional
+
     void getAllAddresses(){
         var addresses = addressService.getAllAddresses();
 
@@ -24,6 +26,7 @@ public class AddressServiceIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldFetchOneAddressPage(){
 
         var addressPage1 = addressService.getOneAddressPage(1);
@@ -33,6 +36,7 @@ public class AddressServiceIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldFetchAddressById(){
         var address = addressService.getAddressById(1L);
         assert address.getAddressId()==1L;

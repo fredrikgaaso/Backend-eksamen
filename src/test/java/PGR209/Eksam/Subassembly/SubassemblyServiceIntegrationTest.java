@@ -26,6 +26,7 @@ public class SubassemblyServiceIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldFetchOneSubassemblyPage(){
 
         var subassemblyPage1 = subassemblyService.getOneSubassemblyPage(1);

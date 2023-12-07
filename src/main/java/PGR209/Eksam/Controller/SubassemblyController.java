@@ -1,6 +1,5 @@
 package PGR209.Eksam.Controller;
 
-import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Subassembly;
 import PGR209.Eksam.Service.SubassemblyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class SubassemblyController {
     }
 
     @PostMapping
-    public Subassembly createSubassembly(@RequestBody Subassembly subassembly) {
+    public Subassembly createSubassembly(@RequestBody String subassembly) {
          return subassemblyService.createSubassembly(subassembly);
     }
 

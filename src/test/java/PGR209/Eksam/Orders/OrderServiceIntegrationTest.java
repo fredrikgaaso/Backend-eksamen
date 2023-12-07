@@ -23,6 +23,7 @@ public class OrderServiceIntegrationTest {
     CustomerRepo customerRepo;
 
     @Test
+    @Transactional
     void getAllOrders(){
         Iterable orders = orderService.getAllOrders();
 
@@ -31,6 +32,7 @@ public class OrderServiceIntegrationTest {
     }
 
     @Test
+    @Transactional
     void shouldFetchOneOrdersPage(){
 
         var ordersPage1 = orderService.getOneOrdersPage(1);
@@ -47,13 +49,15 @@ public class OrderServiceIntegrationTest {
 
         orderService.createOrder(customer,machine);
 
-        var createdOrder = orderService.getOrderById(13L);
+        var createdOrder = orderService.getOrderById(1L);
+        System.out.println(createdOrder);
 
         assert createdOrder.getMachine().size() == 1;
         assert createdOrder.getMachine().get(0).getMachineName() == "TestMachine";
 
     }
     @Test
+    @Transactional
     void shouldFetchOrderById(){
         var order = orderService.getOrderById(1L);
         assert order.getOrderId()==1L;
