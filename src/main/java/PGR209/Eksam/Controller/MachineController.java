@@ -1,7 +1,7 @@
 package PGR209.Eksam.Controller;
 
-import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Machine;
+import PGR209.Eksam.Model.Subassembly;
 import PGR209.Eksam.Service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +21,8 @@ public class MachineController {
     }
 
     @PostMapping
-    public Machine createMachine(@RequestBody Machine machine) {
-         return machineService.createMachine( machine);
+    public Machine createMachine(@RequestBody String machine, Subassembly subassembly) {
+         return machineService.createMachine( machine, subassembly);
     }
 
     @GetMapping

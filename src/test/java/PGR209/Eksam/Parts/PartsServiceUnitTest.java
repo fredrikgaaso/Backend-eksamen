@@ -1,6 +1,5 @@
 package PGR209.Eksam.Parts;
 
-import PGR209.Eksam.Model.Orders;
 import PGR209.Eksam.Model.Parts;
 import PGR209.Eksam.Repo.PartsRepo;
 import PGR209.Eksam.Service.PartsService;
@@ -9,13 +8,16 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ActiveProfiles("test")
 @SpringBootTest
 public class PartsServiceUnitTest {
 
@@ -30,6 +32,16 @@ public class PartsServiceUnitTest {
 
         var parts = partsService.getAllParts();
         assert parts.size() == 3;
+    }
+    @Test
+    void createOnlyPart(){
+        String partName = "TestPart";
+        Parts expectedPart = new Parts();
+        expectedPart.setPartsName(partName);
+        when(partsRepo.save(Mockito.any(Parts.class))).thenReturn(expectedPart);
+
+        Parts createdPart = partsService.createParts(partName);
+        assertEquals(expectedPart, createdPart);
     }
 
     @Test
@@ -60,6 +72,8 @@ public class PartsServiceUnitTest {
         partsService.deleteParts(partsId);
 
         verify(partsRepo).deleteById(partsId);
+        Parts deletedPart = partsService.getPartsById(partsId);
+        assert deletedPart == null;
     }
     @Test
     void createPart(){
@@ -75,5 +89,22 @@ public class PartsServiceUnitTest {
         assertEquals(expectedParts, result);
     }
     @Test
-    void updatePart(){}
+    void updatePart() {
+        long partId = 1L;
+        String updatedPartName = "TestPart";
+
+        Parts oldParts = new Parts();
+        when(partsRepo.findById(partId)).thenReturn(Optional.of(oldParts));
+
+        Parts savedPart = new Parts();
+        savedPart.setPartsId(partId);
+        savedPart.setPartsName("OldName");
+        when(partsRepo.save(Mockito.any(Parts.class))).thenReturn(savedPart);
+
+        partsService.updateParts(updatedPartName, partId);
+
+        Parts updatedPart = partsService.getPartsById(partId);
+
+        assert updatedPart.getPartsName() == updatedPartName;
+    }
 }

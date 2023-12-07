@@ -16,8 +16,6 @@ public class AddressServiceIntegrationTest {
     @Autowired
     CustomerRepo customerRepo;
     @Test
-    @Transactional
-
     void getAllAddresses(){
         var addresses = addressService.getAllAddresses();
 
@@ -26,7 +24,6 @@ public class AddressServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchOneAddressPage(){
 
         var addressPage1 = addressService.getOneAddressPage(1);
@@ -36,7 +33,6 @@ public class AddressServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchAddressById(){
         var address = addressService.getAddressById(1L);
         assert address.getAddressId()==1L;
@@ -47,6 +43,29 @@ public class AddressServiceIntegrationTest {
         addressService.deleteAddress(1L);
 
         assert addressService.getAddressById(1L) == null;
+    }
+
+    @Test
+    @Transactional
+    void createOnlyAddress(){
+        String addressName = "TestAddress 22";
+
+        var createdAddress = addressService.createOnlyAddress(addressName);
+
+        assert createdAddress.getAddressName() == addressName;
+        assert createdAddress.getCustomers().size() == 0;
+    }
+    @Test
+    @Transactional
+    void createAddressWithCustomer (){
+        String addressName = "TestAddress 22";
+        Customer customer = new Customer("TestCustomer", "TestMail@mail.com");
+
+        var createdAddress = addressService.createAddress(addressName,customer);
+
+        assert createdAddress.getAddressName() == addressName;
+        assert createdAddress.getCustomers().contains(customer);
+
     }
     @Test
     @Transactional

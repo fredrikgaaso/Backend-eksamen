@@ -1,6 +1,7 @@
 package PGR209.Eksam.Controller;
 
 import PGR209.Eksam.Model.Address;
+import PGR209.Eksam.Model.Customer;
 import PGR209.Eksam.Service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class AddressController {
     }
 
     @PostMapping
-    public Address createAddress(@RequestBody Address addressName) {
-         return addressService.createAddress(addressName);
+    public Address createAddress(@RequestBody String addressName, Customer customer) {
+         return addressService.createAddress(addressName, customer);
     }
 
     @GetMapping

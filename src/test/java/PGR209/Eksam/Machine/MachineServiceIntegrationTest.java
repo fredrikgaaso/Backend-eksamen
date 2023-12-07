@@ -19,7 +19,6 @@ public class MachineServiceIntegrationTest {
     SubassemblyRepo subassemblyRepo;
 
     @Test
-    @Transactional
     void getAllMachines(){
         var machines = machineService.getAllMachines();
 
@@ -37,7 +36,6 @@ public class MachineServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchMachineById(){
         var machine = machineService.getMachineById(1L);
         assert machine.getMachineId()==1L;
@@ -48,6 +46,31 @@ public class MachineServiceIntegrationTest {
         machineService.deleteMachine(1L);
 
         assert machineService.getMachineById(1L) == null;
+    }
+
+    @Test
+    @Transactional
+    void createOnlyMachine(){
+        String machineName = "TestMachine";
+
+       var createdMachine = machineService.createOnlyMachine(machineName);
+
+       assert createdMachine.getMachineName() == machineName;
+       assert createdMachine.getSubassemblies().isEmpty();
+
+    }
+
+    @Test
+    @Transactional
+    void createMachineWithSubassembly(){
+        String machineName = "TestMachine";
+        Subassembly subassembly = new Subassembly("TestSubassembly");
+
+        var createdMachine =  machineService.createMachine(machineName,subassembly);
+
+        assert createdMachine.getMachineName() == machineName;
+        assert createdMachine.getSubassemblies().contains(subassembly);
+
     }
     @Test
     @Transactional

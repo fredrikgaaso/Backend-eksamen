@@ -16,7 +16,6 @@ public class CustomerServiceIntegrationTest {
     AddressRepo addressRepo;
 
     @Test
-    @Transactional
     void getAllCustomers(){
         var customers = customerService.getAllCustomer();
 
@@ -25,7 +24,6 @@ public class CustomerServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchOneCustomerPage(){
 
         var customerPage1 = customerService.getOneCustomerPage(1);
@@ -35,7 +33,6 @@ public class CustomerServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchCustomerById(){
         var customer = customerService.getCustomerById(1L);
         assert customer.getCustomerId()==1L;
@@ -47,6 +44,35 @@ public class CustomerServiceIntegrationTest {
 
         assert customerService.getCustomerById(1L) == null;
     }
+
+    @Test
+    @Transactional
+    void createOnlyCustomer(){
+        String customerName = "TestCustomer";
+        String customerEmail = "TestMail@mail.com";
+
+        var createdCustomer = customerService.createOnlyCustomer(customerName, customerEmail);
+
+        assert createdCustomer.getCustomerName() == customerName;
+        assert createdCustomer.getCustomerEmail() == customerEmail;
+        assert createdCustomer.getAddresses().isEmpty();
+
+    }
+
+    @Test
+    @Transactional
+    void createCustomerWithAddress(){
+        String customerName = "TestCustomer";
+        String customerEmail = "TestMail@mail.com";
+        Address address = new Address("TestAddress 22");
+
+        var createdCustomer = customerService.createCustomer(customerName,customerEmail,address);
+
+        assert createdCustomer.getCustomerName() == customerName;
+        assert createdCustomer.getCustomerEmail() == customerEmail;
+        assert createdCustomer.getAddresses().contains(address);
+    }
+
     @Test
     @Transactional
     void updateCustomer(){

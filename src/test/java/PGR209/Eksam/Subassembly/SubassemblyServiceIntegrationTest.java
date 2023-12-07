@@ -17,7 +17,6 @@ public class SubassemblyServiceIntegrationTest {
     PartsRepo partsRepo;
 
     @Test
-    @Transactional
     void getAllSubassemblies(){
         var subassemblies = subassemblyService.getAllSubassemblies();
 
@@ -26,7 +25,6 @@ public class SubassemblyServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchOneSubassemblyPage(){
 
         var subassemblyPage1 = subassemblyService.getOneSubassemblyPage(1);
@@ -36,7 +34,6 @@ public class SubassemblyServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchSubassemblyById(){
         var subassembly = subassemblyService.getSubassemblyById(1L);
         assert subassembly.getSubassemblyId()==1L;
@@ -48,10 +45,32 @@ public class SubassemblyServiceIntegrationTest {
 
         assert subassemblyService.getSubassemblyById(1L) == null;
     }
+
+    @Test
+    @Transactional
+    void createOnlySubassembly(){
+        String subassemblyName = "TestSubassembly";
+        var createdSubassembly = subassemblyService.createOnlySubassembly(subassemblyName);
+
+        assert createdSubassembly.getSubassemblyName() == subassemblyName;
+        assert createdSubassembly.getParts().isEmpty();
+    }
+
+    @Test
+    @Transactional
+    void createSubassemblyWithPart(){
+        String subassemblyName = "TestSubassembly";
+        Parts parts = new Parts("TestPart");
+
+        var createdSubassembly = subassemblyService.createSubassembly(subassemblyName, parts);
+
+        assert createdSubassembly.getSubassemblyName() == subassemblyName;
+        assert createdSubassembly.getParts().contains(parts);
+    }
     @Test
     @Transactional
     void updateSubassembly(){
-        var subassemblyId = 1L;
+        Long subassemblyId = 1L;
         var oldSubassemblyName = subassemblyService.getSubassemblyById(subassemblyId).getSubassemblyName();
         var oldSubassemblyParts = subassemblyService.getSubassemblyById(subassemblyId).getParts().size();
         String newSubassemblyName = "TestSubassembly";

@@ -26,10 +26,16 @@ public class SubassemblyService {
         return subassemblyRepo.findById(id).orElse(null);
     }
 
-    public Subassembly createSubassembly(String subassemblyName){
-        Subassembly newSubassembly = new Subassembly(subassemblyName);
-
-        return subassemblyRepo.save(newSubassembly);
+    public Subassembly createOnlySubassembly(String subassemblyName){
+        var subassembly = new Subassembly();
+        subassembly.setSubassemblyName(subassemblyName);
+        return subassemblyRepo.save(subassembly);
+    }
+    public Subassembly createSubassembly(String subassemblyName, Parts parts){
+        var subassembly = new Subassembly();
+        subassembly.setSubassemblyName(subassemblyName);
+        subassembly.getParts().add(parts);
+        return subassemblyRepo.save(subassembly);
     }
 
     public void deleteSubassembly(Long id){

@@ -1,6 +1,5 @@
 package PGR209.Eksam.Service;
 
-import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Parts;
 import PGR209.Eksam.Repo.PartsRepo;
 import org.springframework.stereotype.Service;
@@ -27,12 +26,10 @@ public class PartsService {
     }
 
     public Parts createParts(String partName){
-        Parts newPart = new Parts();
+        var newPart = new Parts();
        newPart.setPartsName(partName);
 
-       Parts savedPart = partsRepo.save(newPart);
-
-        return savedPart;
+        return partsRepo.save(newPart);
     }
 
     public void deleteParts(Long id){

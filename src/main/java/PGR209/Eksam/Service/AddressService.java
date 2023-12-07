@@ -28,8 +28,15 @@ public class AddressService {
     public Address getAddressById(Long id) {
         return addressRepo.findById(id).orElse(null);
     }
-
-    public Address createAddress(Address address){
+    public Address createOnlyAddress(String addressName){
+        var address = new Address(addressName);
+       Address newAddress =  addressRepo.save(address);
+       return newAddress;
+    }
+    public Address createAddress(String addressName, Customer customer){
+        var address = new Address();
+        address.setAddressName(addressName);
+        address.getCustomers().add(customer);
         return addressRepo.save(address);
     }
 

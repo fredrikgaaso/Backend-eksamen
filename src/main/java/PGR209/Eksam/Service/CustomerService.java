@@ -26,8 +26,18 @@ public class CustomerService {
         return customerRepo.findById(id).orElse(null);
     }
 
-    public Customer createCustomer(Customer newCustomer){
-        return customerRepo.save(newCustomer);
+    public Customer createOnlyCustomer(String customerName, String customerEmail){
+        var customer = new Customer();
+        customer.setCustomerName(customerName);
+        customer.setCustomerEmail(customerEmail);
+        return customerRepo.save(customer);
+    }
+    public Customer createCustomer(String customerName, String customerMail, Address address){
+        var customer = new Customer();
+        customer.setCustomerName(customerName);
+        customer.setCustomerEmail(customerMail);
+        customer.getAddresses().add(address);
+        return customerRepo.save(customer);
     }
 
     public void deleteCustomer(Long id){

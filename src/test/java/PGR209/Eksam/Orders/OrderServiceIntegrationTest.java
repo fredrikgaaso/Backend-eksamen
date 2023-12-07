@@ -23,7 +23,6 @@ public class OrderServiceIntegrationTest {
     CustomerRepo customerRepo;
 
     @Test
-    @Transactional
     void getAllOrders(){
         Iterable orders = orderService.getAllOrders();
 
@@ -32,7 +31,6 @@ public class OrderServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchOneOrdersPage(){
 
         var ordersPage1 = orderService.getOneOrdersPage(1);
@@ -40,24 +38,7 @@ public class OrderServiceIntegrationTest {
 
         assert ordersPage1.count() <= 10 && ordersPage2.count() <= 10;
     }
-
     @Test
-    @Transactional
-    void createOrder(){
-        Machine machine = machineRepo.save(new Machine("TestMachine"));
-        Customer customer = customerRepo.save(new Customer("TestCustomer", "TestCustomer@test.com"));
-
-        orderService.createOrder(customer,machine);
-
-        var createdOrder = orderService.getOrderById(1L);
-        System.out.println(createdOrder);
-
-        assert createdOrder.getMachine().size() == 1;
-        assert createdOrder.getMachine().get(0).getMachineName() == "TestMachine";
-
-    }
-    @Test
-    @Transactional
     void shouldFetchOrderById(){
         var order = orderService.getOrderById(1L);
         assert order.getOrderId()==1L;
@@ -68,6 +49,28 @@ public class OrderServiceIntegrationTest {
         orderService.deleteOrder(1L);
 
         assert orderService.getOrderById(1L) == null;
+    }
+
+    @Test
+    @Transactional
+    void createEmptyOrder(){
+        var emptyOrder = orderService.createOnlyOrder();
+
+        assert emptyOrder.getMachine().isEmpty();
+        assert emptyOrder.getCustomer() == null;
+    }
+
+    @Test
+    @Transactional
+    void createOrderWthCustomerAndMachine(){
+        Machine machine = machineRepo.save(new Machine("TestMachine"));
+        Customer customer = customerRepo.save(new Customer("TestCustomer", "TestCustomer@test.com"));
+
+        var createdOrder = orderService.createOrder(customer,machine);
+
+        assert createdOrder.getMachine().size() == 1;
+        assert createdOrder.getMachine().get(0).getMachineName() == "TestMachine";
+
     }
     @Test
     @Transactional

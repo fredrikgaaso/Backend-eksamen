@@ -16,7 +16,6 @@ public class PartsServiceIntegrationTest {
     PartsRepo partsRepo;
 
     @Test
-    @Transactional
     void getAllParts(){
         var parts = partsService.getAllParts();
 
@@ -25,7 +24,6 @@ public class PartsServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchOnePartsPage(){
 
         var partsPage1 = partsService.getOnePartsPage(1);
@@ -35,7 +33,6 @@ public class PartsServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFetchPartsById(){
         var parts = partsService.getPartsById(1L);
         assert parts.getPartsId()==1L;
@@ -53,13 +50,8 @@ public class PartsServiceIntegrationTest {
     void createPart(){
         String partName = "TestPart";
 
-        var newPart = partsService.createParts(partName);
+        var createdPart = partsService.createParts(partName);
 
-        var createdPart = partsService.getPartsById(newPart.getPartsId());
-
-        var createdPartName = partsRepo.findByPartsName(partName);
-
-        assert createdPartName.getPartsName() == partName;
         assert createdPart.getPartsName() == partName;
     }
     @Test

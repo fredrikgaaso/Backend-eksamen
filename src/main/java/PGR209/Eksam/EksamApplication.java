@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class EksamApplication {
@@ -15,6 +16,7 @@ public class EksamApplication {
 	}
 
 	@Bean
+	@Profile("!test")
 	CommandLineRunner commandLineRunner(
 			CustomerRepo customerRepo,
 			AddressRepo addressRepo,
@@ -283,7 +285,6 @@ public class EksamApplication {
 				orders12.getMachine().add(machine12);
 				orderRepo.save(orders12);
 			}
-			System.out.println("hello world");
 
 		};
 
