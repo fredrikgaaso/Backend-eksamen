@@ -22,7 +22,7 @@ public class PartsServiceIntegrationTest {
         var parts = partsService.getAllParts();
 
         assert parts.size()==12;
-        assert parts.get(0).getPartsName().equals("Chip");
+        assert parts.get(0).getPartsName().equals("Part1");
     }
 
     @Test

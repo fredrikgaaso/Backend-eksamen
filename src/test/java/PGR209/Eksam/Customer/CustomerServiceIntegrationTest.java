@@ -22,7 +22,7 @@ public class CustomerServiceIntegrationTest {
         var customers = customerService.getAllCustomer();
 
         assert customers.size()==15;
-        assert customers.get(0).getCustomerName().equals("Hank");
+        assert customers.get(0).getCustomerName().equals("Customer1");
     }
 
     @Test

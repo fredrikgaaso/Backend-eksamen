@@ -22,7 +22,7 @@ public class AddressServiceIntegrationTest {
         var addresses = addressService.getAllAddresses();
 
         assert addresses.size()==15;
-        assert addresses.get(0).getAddressName().equals("hanks gate 22");
+        assert addresses.get(0).getAddressName().equals("Address1");
     }
 
     @Test

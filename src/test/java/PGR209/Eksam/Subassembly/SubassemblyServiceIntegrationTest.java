@@ -23,7 +23,7 @@ public class SubassemblyServiceIntegrationTest {
         var subassemblies = subassemblyService.getAllSubassemblies();
 
         assert subassemblies.size()==12;
-        assert subassemblies.get(0).getSubassemblyName().equals("Motherboard");
+        assert subassemblies.get(0).getSubassemblyName().equals("Subassembly1");
     }
 
     @Test
