@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/api/Machines")
+@RequestMapping("/api/machines")
 public class MachineController {
 
     private final MachineService machineService;

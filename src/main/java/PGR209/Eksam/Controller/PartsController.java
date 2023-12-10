@@ -1,6 +1,5 @@
 package PGR209.Eksam.Controller;
 
-import PGR209.Eksam.Model.Address;
 import PGR209.Eksam.Model.Parts;
 import PGR209.Eksam.Service.PartsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/api/Parts")
+@RequestMapping("/api/parts")
 public class PartsController {
 
     private final PartsService partsService;

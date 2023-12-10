@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/api/Subassembly")
+@RequestMapping("/api/subassembly")
 public class SubassemblyController {
 
     private final SubassemblyService subassemblyService;
