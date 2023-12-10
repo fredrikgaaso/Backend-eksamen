@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Objects;
+
 @SpringBootTest
 public class CustomerServiceIntegrationTest {
     @Autowired
@@ -53,8 +55,8 @@ public class CustomerServiceIntegrationTest {
 
         var createdCustomer = customerService.createOnlyCustomer(customerName, customerEmail);
 
-        assert createdCustomer.getCustomerName() == customerName;
-        assert createdCustomer.getCustomerEmail() == customerEmail;
+        assert Objects.equals(createdCustomer.getCustomerName(), customerName);
+        assert Objects.equals(createdCustomer.getCustomerEmail(), customerEmail);
         assert createdCustomer.getAddresses().isEmpty();
 
     }
@@ -68,8 +70,8 @@ public class CustomerServiceIntegrationTest {
 
         var createdCustomer = customerService.createCustomer(customerName,customerEmail,address);
 
-        assert createdCustomer.getCustomerName() == customerName;
-        assert createdCustomer.getCustomerEmail() == customerEmail;
+        assert Objects.equals(createdCustomer.getCustomerName(), customerName);
+        assert Objects.equals(createdCustomer.getCustomerEmail(), customerEmail);
         assert createdCustomer.getAddresses().contains(address);
     }
 
@@ -85,8 +87,8 @@ public class CustomerServiceIntegrationTest {
         Address newAddress = addressRepo.save(new Address("TestAddress 22"));
         customerService.updateCustomer(newCustomerName, newCustomerEmail,newAddress , customerId);
         var updatedCustomer = customerService.getCustomerById(1L);
-        assert oldCustomerName != updatedCustomer.getCustomerName();
-        assert oldCustomerEmail != updatedCustomer.getCustomerEmail();
+        assert !Objects.equals(oldCustomerName, updatedCustomer.getCustomerName());
+        assert !Objects.equals(oldCustomerEmail, updatedCustomer.getCustomerEmail());
         assert oldCustomerAddresses != updatedCustomer.getAddresses().size();
     }
 }

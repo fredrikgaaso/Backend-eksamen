@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -107,7 +108,7 @@ public class MachineServiceUnitTest {
 
         Machine updatedMachine = machineService.getMachineById(machineId);
 
-        assert updatedMachine.getMachineName() == updatedName;
+        assert Objects.equals(updatedMachine.getMachineName(), updatedName);
         assert updatedMachine.getSubassemblies().contains(newSubassembly);
     }
 }

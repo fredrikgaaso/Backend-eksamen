@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Objects;
+
 @SpringBootTest
 public class PartsServiceIntegrationTest {
     @Autowired
@@ -52,7 +54,7 @@ public class PartsServiceIntegrationTest {
 
         var createdPart = partsService.createParts(partName);
 
-        assert createdPart.getPartsName() == partName;
+        assert Objects.equals(createdPart.getPartsName(), partName);
     }
     @Test
     @Transactional
@@ -65,6 +67,6 @@ public class PartsServiceIntegrationTest {
 
         var updatedPart = partsService.getPartsById(1L);
 
-        assert oldPartsName != updatedPart.getPartsName();
+        assert !Objects.equals(oldPartsName, updatedPart.getPartsName());
     }
 }

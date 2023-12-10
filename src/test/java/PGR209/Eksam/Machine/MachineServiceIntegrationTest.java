@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Objects;
+
 @SpringBootTest
 public class MachineServiceIntegrationTest {
     @Autowired
@@ -55,7 +57,7 @@ public class MachineServiceIntegrationTest {
 
        var createdMachine = machineService.createOnlyMachine(machineName);
 
-       assert createdMachine.getMachineName() == machineName;
+       assert Objects.equals(createdMachine.getMachineName(), machineName);
        assert createdMachine.getSubassemblies().isEmpty();
 
     }
@@ -68,7 +70,7 @@ public class MachineServiceIntegrationTest {
 
         var createdMachine =  machineService.createMachine(machineName,subassembly);
 
-        assert createdMachine.getMachineName() == machineName;
+        assert Objects.equals(createdMachine.getMachineName(), machineName);
         assert createdMachine.getSubassemblies().contains(subassembly);
 
     }
@@ -85,7 +87,7 @@ public class MachineServiceIntegrationTest {
 
         var updatedMachine = machineService.getMachineById(1L);
 
-        assert oldMachineName != updatedMachine.getMachineName();
+        assert !Objects.equals(oldMachineName, updatedMachine.getMachineName());
         assert oldSubassembly != updatedMachine.getSubassemblies().size();
     }
 }

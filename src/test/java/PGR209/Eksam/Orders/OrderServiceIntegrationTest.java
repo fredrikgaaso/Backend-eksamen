@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @SpringBootTest
 public class OrderServiceIntegrationTest {
     @Autowired
@@ -69,7 +71,7 @@ public class OrderServiceIntegrationTest {
         var createdOrder = orderService.createOrder(customer,machine);
 
         assert createdOrder.getMachine().size() == 1;
-        assert createdOrder.getMachine().get(0).getMachineName() == "TestMachine";
+        assert Objects.equals(createdOrder.getMachine().get(0).getMachineName(), "TestMachine");
 
     }
     @Test
@@ -85,6 +87,6 @@ public class OrderServiceIntegrationTest {
         orderService.updateOrders(newCustomer, newMachine, orderId);
         var updatedOrder = orderService.getOrderById(1L);
         assert oldOrderMachines != updatedOrder.getMachine().size();
-        assert oldOrderCustomer != updatedOrder.getCustomer().getCustomerName();
+        assert !Objects.equals(oldOrderCustomer, updatedOrder.getCustomer().getCustomerName());
     }
 }

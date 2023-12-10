@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Objects;
+
 @SpringBootTest
 public class SubassemblyServiceIntegrationTest {
     @Autowired
@@ -52,7 +54,7 @@ public class SubassemblyServiceIntegrationTest {
         String subassemblyName = "TestSubassembly";
         var createdSubassembly = subassemblyService.createOnlySubassembly(subassemblyName);
 
-        assert createdSubassembly.getSubassemblyName() == subassemblyName;
+        assert Objects.equals(createdSubassembly.getSubassemblyName(), subassemblyName);
         assert createdSubassembly.getParts().isEmpty();
     }
 
@@ -64,7 +66,7 @@ public class SubassemblyServiceIntegrationTest {
 
         var createdSubassembly = subassemblyService.createSubassembly(subassemblyName, parts);
 
-        assert createdSubassembly.getSubassemblyName() == subassemblyName;
+        assert Objects.equals(createdSubassembly.getSubassemblyName(), subassemblyName);
         assert createdSubassembly.getParts().contains(parts);
     }
     @Test
@@ -78,7 +80,7 @@ public class SubassemblyServiceIntegrationTest {
         subassemblyService.updateSubassembly(newSubassemblyName, parts, subassemblyId);
         var updatedSubassembly = subassemblyService.getSubassemblyById(1L);
 
-        assert oldSubassemblyName != updatedSubassembly.getSubassemblyName();
+        assert !Objects.equals(oldSubassemblyName, updatedSubassembly.getSubassemblyName());
         assert oldSubassemblyParts != updatedSubassembly.getParts().size();
     }
 }

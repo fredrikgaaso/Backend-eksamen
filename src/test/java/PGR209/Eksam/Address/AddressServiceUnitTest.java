@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -106,7 +107,7 @@ public class AddressServiceUnitTest {
 
         Address updatedAddress = addressService.getAddressById(addressId);
 
-        assert updatedAddress.getAddressName() == updatedName;
+        assert Objects.equals(updatedAddress.getAddressName(), updatedName);
         assert updatedAddress.getCustomers().contains(newCustomer);
     }
 }

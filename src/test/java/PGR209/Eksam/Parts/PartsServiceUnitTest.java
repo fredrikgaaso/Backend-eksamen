@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -105,6 +106,6 @@ public class PartsServiceUnitTest {
 
         Parts updatedPart = partsService.getPartsById(partId);
 
-        assert updatedPart.getPartsName() == updatedPartName;
+        assert Objects.equals(updatedPart.getPartsName(), updatedPartName);
     }
 }

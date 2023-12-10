@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -113,8 +114,8 @@ public class CustomerServiceUnitTest {
 
         Customer updatedCustomer = customerService.getCustomerById(customerId);
 
-        assert updatedCustomer.getCustomerName() == updatedName;
-        assert updatedCustomer.getCustomerEmail() == updatedEmail;
+        assert Objects.equals(updatedCustomer.getCustomerName(), updatedName);
+        assert Objects.equals(updatedCustomer.getCustomerEmail(), updatedEmail);
         assert updatedCustomer.getAddresses().contains(newAddress);
     }
 }

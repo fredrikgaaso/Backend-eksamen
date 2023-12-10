@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Objects;
+
 @SpringBootTest
 public class AddressServiceIntegrationTest {
     @Autowired
@@ -52,8 +54,8 @@ public class AddressServiceIntegrationTest {
 
         var createdAddress = addressService.createOnlyAddress(addressName);
 
-        assert createdAddress.getAddressName() == addressName;
-        assert createdAddress.getCustomers().size() == 0;
+        assert Objects.equals(createdAddress.getAddressName(), addressName);
+        assert createdAddress.getCustomers().isEmpty();
     }
     @Test
     @Transactional
@@ -63,7 +65,7 @@ public class AddressServiceIntegrationTest {
 
         var createdAddress = addressService.createAddress(addressName,customer);
 
-        assert createdAddress.getAddressName() == addressName;
+        assert Objects.equals(createdAddress.getAddressName(), addressName);
         assert createdAddress.getCustomers().contains(customer);
 
     }
@@ -80,7 +82,7 @@ public class AddressServiceIntegrationTest {
 
         addressService.updateAddress(newAddressName, newCustomer, addressId);
         var updatedAddress = addressService.getAddressById(1L);
-        assert oldAddressName != updatedAddress.getAddressName();
+        assert !Objects.equals(oldAddressName, updatedAddress.getAddressName());
         assert oldAddressCustomers != updatedAddress.getCustomers().size();
     }
 }
